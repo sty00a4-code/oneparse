@@ -20,6 +20,7 @@ impl Positon {
     pub fn new(ln: Range<usize>, col: Range<usize>) -> Self {
         Self { ln, col }
     }
+    /// turns the `ln` and `col` into `ln..ln + 1` and `col..col + 1`
     pub fn single(ln: usize, col: usize) -> Self {
         Self {
             ln: ln..ln + 1,

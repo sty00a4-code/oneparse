@@ -9,12 +9,14 @@ pub mod lexer;
 pub mod parser;
 pub mod position;
 
+/// lexes the `text` with the provided `Lexable` type
 pub fn lex<T: lexer::Lexable>(
     text: String,
 ) -> Result<Vec<position::Located<T>>, position::Located<T::Error>> {
     lexer::Lexer::new(text).lex::<T>()
 }
 
+/// lexes and then parses the `text` with the provided `Lexable`, `Parsable` and `Error` types
 pub fn parse<T: lexer::Lexable, P: parser::Parsable<T>, E: Error>(
     text: String,
 ) -> Result<position::Located<P>, position::Located<E>>
