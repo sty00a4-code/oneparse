@@ -152,14 +152,17 @@ fn simple_parser() -> Result<(), String> {
     }
 
     let ast = parse::<Token, Expression>("1 + 2".to_string()).map_err(|err| err.to_string())?;
+    #[allow(irrefutable_let_patterns)]
     let Expression::Binary { left, op, right } = ast.unwrap() else {
         panic!("not binary")
     };
+    #[allow(irrefutable_let_patterns)]
     let Atom::Number(number) = left.unwrap() else {
         panic!("not a number")
     };
     assert_eq!(number, 1.);
     assert_eq!(op, Token::Add);
+    #[allow(irrefutable_let_patterns)]
     let Atom::Number(number) = right.unwrap() else {
         panic!("not a number")
     };
