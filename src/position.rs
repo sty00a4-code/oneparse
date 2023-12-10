@@ -20,6 +20,12 @@ impl Positon {
     pub fn new(ln: Range<usize>, col: Range<usize>) -> Self {
         Self { ln, col }
     }
+    pub fn single(ln: usize, col: usize) -> Self {
+        Self {
+            ln: ln..ln + 1,
+            col: col..col + 1,
+        }
+    }
     /// entends the ends of `self.ln` and `self.col` by the ends of `other`
     pub fn extend(&mut self, other: &Self) {
         self.ln.end = other.ln.end;
@@ -32,7 +38,10 @@ impl<T> Located<T> {
     }
     /// map the inner `value`
     pub fn map<F: FnOnce(T) -> U, U>(self, f: F) -> Located<U> {
-        Located { value: f(self.value), pos: self.pos }
+        Located {
+            value: f(self.value),
+            pos: self.pos,
+        }
     }
     /// unwraps the inner `value`
     pub fn unwrap(self) -> T {
@@ -60,7 +69,10 @@ impl<T: Clone> Clone for Located<T> {
 }
 impl<T: Default> Default for Located<T> {
     fn default() -> Self {
-        Self { value: T::default(), pos: Positon::default() }
+        Self {
+            value: T::default(),
+            pos: Positon::default(),
+        }
     }
 }
 impl<T: PartialEq> PartialEq for Located<T> {
@@ -71,6 +83,9 @@ impl<T: PartialEq> PartialEq for Located<T> {
 
 impl From<(Range<usize>, Range<usize>)> for Positon {
     fn from(value: (Range<usize>, Range<usize>)) -> Self {
-        Self { ln: value.0, col: value.1 }
+        Self {
+            ln: value.0,
+            col: value.1,
+        }
     }
 }
